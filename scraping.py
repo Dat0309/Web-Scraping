@@ -1,17 +1,40 @@
-from os import urandom
-from bs4 import BeautifulSoup
-import requests
+# from TikTokApi import TikTokApi
+# import pandas as pd
+# api = TikTokApi.get_instance()
+# n_videos = 100
 
-url = ('https://www.tiktok.com/foryou?is_copy_url=1&is_from_webapp=v1')
+# def simple_dict(tiktok_dict):
+#     to_return = {}
+#     to_return['user_name'] = tiktok_dict['author']['uniqueId']
+#     to_return['user_id'] = tiktok_dict['author']['id']
+#     to_return['video_id'] = tiktok_dict['id']
+#     to_return['video_desc'] = tiktok_dict['desc']
+#     to_return['video_time'] = tiktok_dict['createTime']
+#     to_return['video_length'] = tiktok_dict['video']['duration']
+#     to_return['video_link'] = 'https://www.tiktok.com/@{}/video/{}?lang=en'.format(to_return['user_name'], to_return['video_id'])
+#     to_return['n_likes'] = tiktok_dict['stats']['diggCount']
+#     to_return['n_shares'] = tiktok_dict['stats']['shareCount']
+#     to_return['n_comments'] = tiktok_dict['stats']['commentCount']
+#     to_return['n_plays'] = tiktok_dict['stats']['playCount']
+#     return to_return
 
-r = requests.get(url)
+# trending_videos = api.by_trending(count=n_videos)
 
-web_content = BeautifulSoup(r.text, 'lxml')
+# trending_videos = [simple_dict(v) for v in trending_videos]
+# trending_videos_df = pd.DataFrame(trending_videos)
+# trending_videos_df.to_csv('trending.csv', index=False)
 
-web_content = web_content.find_all('path')
+from TikTokApi import TikTokApi
+import pandas as pd
 
-for path in web_content:
-    number = path.find()
-    print(path)
+api = TikTokApi.get_instance()
 
-# print(web_content)
+count = 100
+
+tiktoks = api.by_hashtag("xuhuong", count=count)
+
+for tiktok in tiktoks:
+    print(tiktok)
+
+dataframe = pd.DataFrame(tiktoks)
+dataframe.to_csv('trending.csv', index=False)
